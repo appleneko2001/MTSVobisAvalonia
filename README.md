@@ -11,6 +11,9 @@ Temporarily solution for who cant look received SMS in web console of MTS modem 
 ### Dependencies
 * [Microsoft DotNET Core 3.1](https://dotnet.microsoft.com/download/dotnet/3.1/runtime) 
 
+### Download
+* [Go to Releases](https://github.com/appleneko2001/MTSVobisAvalonia/releases)
+
 ### Meme about web console of MTS 8810FT
 
 ![](mtsvobia.png)
