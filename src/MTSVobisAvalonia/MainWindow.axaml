@@ -1,0 +1,56 @@
+﻿<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:views="clr-namespace:MTSVobisAvalonia.Views"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="MTSVobisAvalonia.MainWindow"
+        Title="MTSVobisAvalonia"
+        MinWidth="600" MinHeight="240"
+        Width="900">
+  <Grid>
+    <Grid.RowDefinitions>
+      <RowDefinition Height="*"/>
+      <RowDefinition Height="24"/>
+    </Grid.RowDefinitions>
+    <Grid>
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="160" MinWidth="80"/>
+        <ColumnDefinition Width="0"/>
+        <ColumnDefinition Width="*"/>
+      </Grid.ColumnDefinitions>
+      <ScrollViewer Grid.Column="0">
+        <StackPanel>
+          <Button Content="SMS"/>
+        </StackPanel>
+      </ScrollViewer>
+
+      <Grid Grid.Column="2" Background="AliceBlue">
+        <views:SmsViewer/>
+      </Grid>
+      <GridSplitter Grid.Column="1" Width="4" Height="64"/>
+    </Grid>
+    <Border Grid.Row="1"
+            BorderThickness="1" 
+            BorderBrush="{DynamicResource ThemeBorderMidBrush}">
+      <Grid Margin="4">
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="Auto"/>
+          <ColumnDefinition Width="*"/>
+          <ColumnDefinition Width="*"/>
+          <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <StackPanel Orientation="Horizontal" Margin="0,0,12,0">
+          <TextBlock Text="SMS Unread: "/>
+          <TextBlock Text="{Binding SmsUnreadCounts}"/>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal" Grid.Column="1" Margin="0,0,12,0">
+          <TextBlock Text="SMS Inbox: "/>
+          <TextBlock Text="{Binding SmsInboxCounts}"/>
+          <TextBlock Text="/" Margin="4,0"/>
+          <TextBlock Text="{Binding SmsInboxMaxCapacity}"/>
+        </StackPanel>
+      </Grid>
+    </Border>
+  </Grid>
+</Window>
