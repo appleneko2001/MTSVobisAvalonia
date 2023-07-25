@@ -1,44 +1,29 @@
 ﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace MTSVobisAvalonia.Models
 {
-    public class SmsDataItemModel : ViewModelBase
+    public class SmsDataItemModel
     {
-        [JsonProperty("id")]
-        public string Id { get; private set; }
-        [JsonProperty("number")]
-        public string From { get; private set; }
-        private string m_Content;
+        [JsonProperty("id")] public string Id { get; set; } = string.Empty;
+        
+        [JsonProperty("number")] public string From { get; set; } = string.Empty;
+
         [JsonProperty("content")]
-        public string Content 
-        { 
+        public string Content
+        {
             get => m_Content; 
-            private set { m_Content = value.UnicodeDecode(); } 
+            set => m_Content = value.UnicodeDecode();
         }
-        [JsonProperty("date")]
-        public string DateString { get; private set; }
+        
+        //get => m_Content; 
+        //private set { m_Content = value.UnicodeDecode(); } 
+        [JsonProperty("date")] public string DateString { get; private set; } = string.Empty;
 
-        private string m_TagString;
-        [JsonProperty("tag")]
-        public string TagString 
-        { 
-            get => m_TagString;
-            private set { 
-                m_TagString = value; 
-                this.RaisePropertyChanged(); 
-            }
-        }
+        [JsonProperty("tag")] public string TagString { get; set; } = string.Empty;
+        
+        public string ContentPreview => Content.Trimming(30);
 
-        public string GetClasses => TagString == "1" ? "Unread" : "";
-        public bool IsUnread => TagString == "1";
-
-        public void SetRead(bool isRead) => TagString = "0";
-
-        public string ContentPreview => m_Content.Trimming(40);
-
+        private string m_Content = string.Empty;
 
         public override string ToString()
         {

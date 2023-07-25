@@ -1,17 +1,6 @@
-﻿using Avalonia.Collections;
-using MessageBox.Avalonia;
-using MessageBox.Avalonia.DTO;
-using MessageBox.Avalonia.Enums;
-using MTSVobisAvalonia.Models;
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Reactive;
-using System.Text;
-
-namespace MTSVobisAvalonia.Views.Models
+﻿namespace MTSVobisAvalonia.Views.Models
 {
+    /*
     public class SmsViewerModels : ViewModelBase
     {
         private SmsViewer parent;
@@ -33,8 +22,6 @@ namespace MTSVobisAvalonia.Views.Models
                 this.RaisePropertyChanged();
             }
         }
-
-        //public ReactiveCommand<IList<object>, Unit> DeleteSelectedCommand { get; }
 
         public async void DeleteSelectedMsgRequest(AvaloniaList<object> selected)
         {
@@ -97,5 +84,5 @@ namespace MTSVobisAvalonia.Views.Models
             Messages.Clear();
             Messages.AddRange(data.Messages);
         }
-    }
+    }*/
 }

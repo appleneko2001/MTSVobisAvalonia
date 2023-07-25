@@ -1,0 +1,29 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:viewModels="clr-namespace:MTSVobisAvalonia.ViewModels"
+                    xmlns:converters="clr-namespace:MTSVobisAvalonia.Views.Converters">
+    <converters:BoolToValueConverter x:Key="IsUnreadBrushConverter">
+        <converters:BoolToValueConverter.IsTrue>
+            <SolidColorBrush>DarkOrange</SolidColorBrush>
+        </converters:BoolToValueConverter.IsTrue>
+        <converters:BoolToValueConverter.IsFalse>
+            <SolidColorBrush>Transparent</SolidColorBrush>
+        </converters:BoolToValueConverter.IsFalse>
+    </converters:BoolToValueConverter>
+    
+    <!-- Add Resources Here -->
+    <DataTemplate x:Key="SmsDataItemTemplate"
+                  DataType="viewModels:SmsDataItemViewModel">
+        <DockPanel>
+            <Border DockPanel.Dock="Left"
+                    Width="4"
+                    Background="{Binding Path=IsUnread,
+                                         Converter={StaticResource IsUnreadBrushConverter}}"/>
+            <StackPanel DockPanel.Dock="Right"
+                        Margin="8">
+                <TextBlock Text="{Binding From}" FontSize="16"/>
+                <TextBlock Text="{Binding ContentPreview}" TextTrimming="CharacterEllipsis"/>
+            </StackPanel>
+        </DockPanel>
+    </DataTemplate>
+</ResourceDictionary>

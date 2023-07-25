@@ -1,0 +1,29 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:viewModels="clr-namespace:MTSVobisAvalonia.ViewModels">
+    <!-- Add Resources Here -->
+    <DataTemplate x:Key="SmsDataContentTemplate"
+                  DataType="viewModels:SmsDataItemViewModel">
+        <ScrollViewer Grid.Column="2"
+                      HorizontalContentAlignment="Stretch"
+                      HorizontalScrollBarVisibility="Disabled"
+                      HorizontalAlignment="Stretch">
+            <Grid HorizontalAlignment="Stretch"
+                  VerticalAlignment="Stretch"
+                  Margin="16">
+                <StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="From: "/>
+                        <TextBlock Text="{Binding From}"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="When: "/>
+                        <TextBlock Text="{Binding When}"/>
+                    </StackPanel>
+                    <TextBox Margin="0, 16" Text="{Binding Content}" TextWrapping="Wrap"
+                             AcceptsReturn="True" IsReadOnly="True"/>
+                </StackPanel>
+            </Grid>
+        </ScrollViewer>
+    </DataTemplate>
+</ResourceDictionary>

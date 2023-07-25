@@ -1,9 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace MTSVobisAvalonia.Classes
+﻿namespace MTSVobisAvalonia.Classes
 {
+    /// <summary>
+    /// ZTE MF831 based backend HTTP APIs.
+    /// </summary>
     public class ZTEApi
     {
         public const string GET_SMS_CAPACITY_INFO = "/goform/goform_get_cmd_process?cmd=sms_capacity_info";

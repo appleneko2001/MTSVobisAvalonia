@@ -1,0 +1,50 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:viewModels="clr-namespace:MTSVobisAvalonia.ViewModels">
+    <ResourceDictionary.MergedDictionaries>
+      <ResourceInclude Source="avares://MTSVobisAvalonia/Views/Templates/SmsDataContentTemplate.axaml"/>
+      <ResourceInclude Source="avares://MTSVobisAvalonia/Views/Templates/SmsDataItemTemplate.axaml"/>
+    </ResourceDictionary.MergedDictionaries>
+  
+    <!-- Add Resources Here -->
+    <DataTemplate x:Key="SmsViewerDataTemplate"
+                  DataType="viewModels:SmsViewerViewModel">
+        <Grid RowDefinitions="32,*">
+            <StackPanel Orientation="Horizontal">
+                <Button Command="{Binding RefreshSmsBoxManually}">Refresh</Button> 
+                <Button>Delete All</Button>
+            </StackPanel>
+            
+            <Border Grid.Row="1" BorderThickness="1" BorderBrush="{DynamicResource ThemeBorderMidBrush}">
+            <Grid>
+              <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="260" MinWidth="160"/>
+                <ColumnDefinition Width="0"/>
+                <ColumnDefinition Width="*" MinWidth="100"/>
+              </Grid.ColumnDefinitions>
+              <ListBox Name="SmsListBox"
+                       ItemsSource="{Binding Messages}"
+                       ItemTemplate="{DynamicResource SmsDataItemTemplate}"
+                       Selection="{Binding Selection}"
+                       AutoScrollToSelectedItem="True"
+                       ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                       SelectionMode="Multiple">
+                <ListBox.ContextMenu>
+                  <ContextMenu>
+                    <MenuItem Header="Delete selected" 
+                              Command="{Binding DeleteSelectedMsgRequest}" 
+                              CommandParameter="{Binding Selection}"/>
+                  </ContextMenu>
+                </ListBox.ContextMenu>
+              </ListBox>
+              
+              <ContentControl Grid.Column="2"
+                              Content="{Binding SelectedMessage}"
+                              ContentTemplate="{StaticResource SmsDataContentTemplate}"/>
+              
+              <GridSplitter Grid.Column="1" Width="4" Height="64"/>
+            </Grid> 
+          </Border>
+        </Grid>
+    </DataTemplate>
+</ResourceDictionary>

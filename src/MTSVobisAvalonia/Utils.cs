@@ -48,6 +48,9 @@ namespace MTSVobisAvalonia
                 url = "http://" + url;
             }
 
+            if (!parameters.StartsWith('&'))
+                parameters = parameters.Insert(0, "&");
+
             var urlMixed = $"{url}{(string.IsNullOrWhiteSpace(parameters) ? "" : parameters)}";
             if (appendTimestamp)
                 urlMixed = AppendTimestamp(urlMixed);
@@ -108,7 +111,9 @@ namespace MTSVobisAvalonia
                 int.Parse(parts[2]), 
                 int.Parse(parts[3]), 
                 int.Parse(parts[4]), 
-                int.Parse(parts[5]));
+                int.Parse(parts[5]))
+                .AddYears(2000); // Fix 00xx year display error
+            // ZTE Vobis firmware sucks
         }
 
         public static ulong ParseUInt64(this string str)

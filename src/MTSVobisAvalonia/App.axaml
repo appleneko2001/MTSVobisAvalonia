@@ -2,8 +2,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              x:Class="MTSVobisAvalonia.App">
     <Application.Styles>
-        <StyleInclude Source="avares://Avalonia.Themes.Default/DefaultTheme.xaml"/>
-        <StyleInclude Source="avares://Avalonia.Themes.Default/Accents/BaseLight.xaml"/>
+      <SimpleTheme/>
 
       <Style Selector="Button">
         <Setter Property="Background" Value="Transparent"/>
@@ -13,6 +12,13 @@
       </Style>
       <Style Selector="Track:vertical > Thumb">
         <Setter Property="Width" Value="16"/>
+      </Style>
+      
+      <Style Selector="ListBoxItem">
+        <Setter Property="Padding" Value="0"/>
+      </Style>
+      <Style Selector="TabItem">
+        <Setter Property="TextElement.Foreground" Value="White"/>
       </Style>
     </Application.Styles>
 </Application>
