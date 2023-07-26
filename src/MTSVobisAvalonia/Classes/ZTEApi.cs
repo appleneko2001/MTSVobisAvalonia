@@ -3,14 +3,16 @@
     /// <summary>
     /// ZTE MF831 based backend HTTP APIs.
     /// </summary>
-    public class ZTEApi
+    public static class ZteApi
     {
-        public const string GET_SMS_CAPACITY_INFO = "/goform/goform_get_cmd_process?cmd=sms_capacity_info";
-        public const string GET_SMS_DATA = "/goform/goform_get_cmd_process?cmd=sms_data_total";
-        public const string SET_SMS_READED = "/goform/goform_set_cmd_process?goformId=SET_MSG_READ";
-        public const string SET_DELETE_SMS = "/goform/goform_set_cmd_process?goformId=DELETE_SMS";
+        // Returns: {"unlock_nck_time":"10"}
+        public const string GetUnlockNetworkRemains = "/goform/goform_get_cmd_process?cmd=unlock_nck_time";
+        public const string GetSmsCapacityInfo = "/goform/goform_get_cmd_process?cmd=sms_capacity_info";
+        public const string GetSmsData = "/goform/goform_get_cmd_process?cmd=sms_data_total";
+        public const string SetSmsRead = "/goform/goform_set_cmd_process?goformId=SET_MSG_READ";
+        public const string SetDeleteSms = "/goform/goform_set_cmd_process?goformId=DELETE_SMS";
 
-        public const string GET_PERIODICAL_DEVICE_STATUS = 
+        public const string GetPeriodicalDeviceStatus = 
             "/goform/goform_get_cmd_process?multi_data=1&sms_received_flag_flag=0&sts_received_flag_flag=0&cmd=" +
             "modem_main_state," +
             "pin_status," +
