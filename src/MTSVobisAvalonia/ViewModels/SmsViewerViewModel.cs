@@ -27,7 +27,7 @@ namespace MTSVobisAvalonia.ViewModels
             private set
             {
                 if (this.SetAndUpdateIfChanged(ref m_SelectedMessage, value)) 
-                    UpdateSmsRead(value);
+                    UpdateSmsReadAsync(value);
             }
         }
 
@@ -116,7 +116,7 @@ namespace MTSVobisAvalonia.ViewModels
                 return;
             
             // otherwise, complete the deletion procedure.
-            if (ModemService.Instance.DeleteMessages(list))
+            if (await ModemService.Instance.DeleteMessagesAsync(list))
             {
                 Selection.Clear();
                 ApplySmsBox(ModemService.Instance.GetAllReceivedMessages());
@@ -162,7 +162,7 @@ namespace MTSVobisAvalonia.ViewModels
                  * @method deleteAllMessages
                  * From /js/config/service.js
                  */ 
-            if (ModemService.Instance.DeleteMessages(msgs))
+            if (await ModemService.Instance.DeleteMessagesAsync(msgs))
             {
                 Selection.Clear();
                 ApplySmsBox(ModemService.Instance.GetAllReceivedMessages());
@@ -178,7 +178,7 @@ namespace MTSVobisAvalonia.ViewModels
             }
         }
 
-        public void UpdateSmsRead(SmsDataItemViewModel? viewModel)
+        public async void UpdateSmsReadAsync(SmsDataItemViewModel? viewModel)
         {
             if(viewModel == null)
                 return;
@@ -187,16 +187,16 @@ namespace MTSVobisAvalonia.ViewModels
                 return;
             
             viewModel.SetRead();
-            m_ModemService.SetSmsRead(new []
+            await m_ModemService.SetSmsReadAsync(new []
             {
                 viewModel.Id
             });
         }
         
-        public void RefreshSmsBoxManually()
+        public async void RefreshSmsBoxManually()
         {
             var service = ModemService.Instance;
-            var result = service.GetAllReceivedMessages();
+            var result = await service.GetAllReceivedMessagesAsync();
             ApplySmsBox(result);
         }
         
