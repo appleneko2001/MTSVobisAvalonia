@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Net;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace MTSVobisAvalonia
@@ -10,35 +8,36 @@ namespace MTSVobisAvalonia
     public static class Utils
     {
         public const string DEFAULT_USERAGENT = @"Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:84.0) Gecko/20100101 Firefox/84.0";
-
-
+        
         public static string AppendTimestamp(string url) => $"{url}&_={new DateTimeOffset(DateTime.Now).ToUnixTimeMilliseconds()}";
 
-        public static async Task<string> GetResponseAsync(string url, string method = "GET", string parameters = "")
+        public static async Task<string> GetResponseAsync(string url, string method = "GET", string parameters = "", bool appendTimestamp=true)
         {
-            if(!url.ToLower().StartsWith("http://"))
+            // Although the ZTE (or MTS 8810FT) are using HTTP without certs to access management UI.
+            // the rarely possibility would appear that some modem are using HTTPS instead.
+            // Please tell me if your Modem WebUI does using HTTPS instead of HTTP. 
+            if (!url.ToLower().StartsWith("http://"))
             {
                 url = "http://" + url;
             }
 
+            if (!parameters.StartsWith('&'))
+                parameters = parameters.Insert(0, "&");
+
             var urlMixed = $"{url}{(string.IsNullOrWhiteSpace(parameters) ? "" : parameters)}";
+            if (appendTimestamp)
+                urlMixed = AppendTimestamp(urlMixed);
             var request = (HttpWebRequest)WebRequest.Create(urlMixed);
             //request.UserAgent = DEFAULT_USERAGENT;
             request.Method = method;
-            var responseTask = Task.Factory.FromAsync<WebResponse>
+            var responseTask = Task.Factory.FromAsync
                                       (request.BeginGetResponse,
                                        request.EndGetResponse,
                                        null);
-            using (var response = (HttpWebResponse)await responseTask)
-            {
-                using (var origin = response.GetResponseStream())
-                {
-                    using (var reader = new StreamReader(origin))
-                    {
-                        return reader.ReadToEnd();
-                    }
-                }
-            }
+            using var response = (HttpWebResponse)await responseTask;
+            await using var origin = response.GetResponseStream();
+            using var reader = new StreamReader(origin);
+            return await reader.ReadToEndAsync();
         }
 
         public static string GetResponse(string url, string method = "GET", string parameters = "", bool appendTimestamp=true)
@@ -57,17 +56,11 @@ namespace MTSVobisAvalonia
 
             var request = (HttpWebRequest)WebRequest.Create(urlMixed);
             //request.UserAgent = DEFAULT_USERAGENT;
-            request.Method = method; 
-            using (var response = (HttpWebResponse)request.GetResponse())
-            {
-                using (var origin = response.GetResponseStream())
-                {
-                    using (var reader = new StreamReader(origin))
-                    {
-                        return reader.ReadToEnd();
-                    }
-                }
-            }
+            request.Method = method;
+            using var response = (HttpWebResponse)request.GetResponse();
+            using var origin = response.GetResponseStream();
+            using var reader = new StreamReader(origin);
+            return reader.ReadToEnd();
         }
 
         /// <summary>
@@ -116,24 +109,9 @@ namespace MTSVobisAvalonia
             // ZTE Vobis firmware sucks
         }
 
-        public static ulong ParseUInt64(this string str)
-        {
-            if (ulong.TryParse(str, out var r))
-                return r;
-            return 0;
-        }
-        public static int ParseInt32(this string str)
-        {
-            if (int.TryParse(str, out var r))
-                return r;
-            return 0;
-        }
+        public static ulong ParseUInt64(this string str) => ulong.TryParse(str, out var r) ? r : 0;
+        public static int ParseInt32(this string str) => int.TryParse(str, out var r) ? r : 0;
 
-        public static string ReadAllText(this string path)
-        {
-            if (File.Exists(path))
-                return File.ReadAllText(path);
-            return null;
-        }
+        public static string? ReadAllText(this string path) => File.Exists(path) ? File.ReadAllText(path) : null;
     }
 }
